@@ -1,0 +1,76 @@
+@import '../../shared/styles/variables';
+
+.container {
+  padding: 1em;
+  border: 1px solid $button-gray;
+  border-radius: $form-radius;
+  display: flex;
+  justify-content: space-between;
+  background: $white;
+}
+
+.default-form-item {
+  width: 30%;
+  display: block;
+  margin: 0 0.5em;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.between-form-item {
+  margin: 0 0.5em;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &.select {
+    width: 20%;
+  }
+}
+
+.between-form-input {
+  width: 15%;
+  display: block;
+  margin: 0 0.5em;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.remove {
+  background: transparent;
+  border: none;
+  color: $dark-gray;
+  flex: 1;
+
+  .icon {
+    font-size: 1.5em;
+  }
+}
+
+.container-form {
+  flex: 35;
+  display: flex;
+  flex-direction: row;
+}
+
+.input {
+  border: 1px solid $button-gray;
+  border-radius: $form-radius;
+  padding: 0.25em 0.75em;
+  font-size: 1em;
+}
+
+.filler {
+  border: 1px solid $button-gray;
+  border-radius: $form-radius;
+  padding: 0.25em 0.75em;
+  font-size: 1em;
+  background: #e1e6ec;
+}

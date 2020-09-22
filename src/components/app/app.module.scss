@@ -1,6 +1,61 @@
+@import '../../shared/styles/variables';
+@import '../../shared/styles/mixins';
+
 .container {
-  background: green;
-  p {
-    font-family: 'Courier New', Courier, monospace;
+  width: 50%;
+  margin: 0 auto;
+  min-width: 20em;
+}
+
+.title {
+  font-size: 1.25em;
+}
+
+.rows-container {
+  margin-bottom: 1em;
+}
+
+.rows {
+}
+
+.condition-container {
+  margin: 0.5em 0;
+}
+
+.add-button {
+  @include button;
+  background: $button-blue;
+  margin: 1em 0;
+}
+
+.footer {
+  border-top: 1px solid $button-gray;
+
+  .footer-actions {
+    margin: 1em 0;
+  }
+
+  .search {
+    @include button;
+    background: $button-blue;
+    margin-right: 1em;
+
+    .icon {
+      margin-right: 0.5em;
+    }
+  }
+  .reset {
+    @include button;
+    background: $button-gray;
+  }
+
+  .results {
+    border: 1px solid $button-gray;
+    background: $white;
+    border-radius: $form-radius;
+    padding: 0.5em;
+    font-size: 1em;
+    color: $button-gray;
+    display: block;
   }
 }

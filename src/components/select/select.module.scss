@@ -1,0 +1,46 @@
+@import '../../shared/styles/variables';
+
+.container {
+  position: relative;
+  flex-grow: 1;
+}
+
+.initial {
+  font-size: 1em;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid $button-gray;
+  background: $white;
+  text-align: left;
+  border-radius: $form-radius;
+  padding: 0.25em 0.75em;
+  color: $darker-gray;
+
+  .icon {
+    margin-top: 0.1em;
+  }
+}
+
+.selectable {
+  position: absolute;
+  top: calc(100% + 0.5em);
+  left: 0;
+  padding: 0.75em;
+  background: $white;
+  width: calc(100% - 1.5em);
+  box-shadow: 1px 4px 6px #eee;
+  border: 1px solid #eee;
+  border-radius: $form-radius;
+  z-index: 1;
+
+  .item {
+    margin: 0.5em 0;
+    color: $darker-gray;
+    cursor: pointer;
+
+    &.selected {
+      font-weight: bold;
+    }
+  }
+}

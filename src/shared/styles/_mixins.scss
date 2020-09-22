@@ -1,0 +1,8 @@
+@mixin button() {
+  border: none;
+  border-radius: $form-radius;
+  color: white;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  cursor: pointer;
+}
