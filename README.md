@@ -2,6 +2,11 @@
 
 Simple UI SQL builder for interview project
 
+## Setup
+
+- install `npm install`
+- start `npm start`
+
 ## Requirements
 
 - track time
