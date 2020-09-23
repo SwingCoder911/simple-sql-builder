@@ -13,6 +13,9 @@ export const getCondition = (
   value,
 });
 
+export const isConditionBetween = (condition) =>
+  condition.operator.key === 'between';
+
 export const defaultCondition = getCondition(defaultField);
 
 export const getOperatorFromFieldAndKey = (type, search) => {
@@ -28,7 +31,7 @@ export function getSQLFromConditions(conditions) {
     clauses = [];
   conditions.forEach((condition) => {
     columnNames.push(condition.key);
-    if (condition.operator.key === 'between') {
+    if (isConditionBetween(condition)) {
       if (
         isNaN(condition.min) ||
         condition.min === '' ||

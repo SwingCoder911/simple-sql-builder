@@ -7,6 +7,7 @@ import { fields, operators } from '../../app.config';
 import {
   defaultCondition,
   getOperatorFromFieldAndKey,
+  isConditionBetween,
 } from '../../shared/libs/utils';
 import styles from './form-condition.module.scss';
 
@@ -106,7 +107,7 @@ export default function FormCondition({
       ...condition,
       operator: getOperatorFromFieldAndKey(condition.type, selected.key),
     };
-    if (selected.key === 'between') {
+    if (isConditionBetween(newCondition)) {
       const { defaultValue } = newCondition.operator;
       newCondition = {
         ...newCondition,
@@ -156,13 +157,12 @@ export default function FormCondition({
       label: key,
       key,
     }));
-  const getIsBetween = () => condition.operator.key === 'between';
   return (
     <div className={classNames(styles.container, className)}>
       <button className={styles.remove} onClick={(e) => onRemoveClicked(e)}>
         <FontAwesomeIcon icon={faTimes} className={styles.icon} />
       </button>
-      {getIsBetween() ? (
+      {isConditionBetween(condition) ? (
         <BetweenForm
           currentCondition={condition}
           getSelectOptionsFromFields={getSelectOptionsFromFields}

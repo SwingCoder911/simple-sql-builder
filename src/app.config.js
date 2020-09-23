@@ -53,7 +53,7 @@ export const fields = [
 const baseOperators = {
   equals: {
     key: 'equals',
-    defaultValue: null,
+    defaultValue: 42,
     getClause: (column, value) => `${column}='${value}'`,
   },
   'in list': {
@@ -69,12 +69,12 @@ export const operators = {
     baseOperators.equals,
     {
       key: 'contains',
-      defaultValue: null,
+      defaultValue: 'text',
       getClause: (column, value) => `${column} LIKE '%${value}%'`,
     },
     {
       key: 'starts with',
-      defaultValue: null,
+      defaultValue: 42,
       getClause: (column, value) => `${column} LIKE '${value}%'`,
     },
     baseOperators['in list'],
@@ -88,12 +88,12 @@ export const operators = {
     },
     {
       key: 'greater than',
-      defaultValue: null,
+      defaultValue: 42,
       getClause: (column, value) => `${column}>'${value}'`,
     },
     {
       key: 'less than',
-      defaultValue: null,
+      defaultValue: 42,
       getClause: (column, value) => `${column}<'${value}'`,
     },
     baseOperators['in list'],
