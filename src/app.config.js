@@ -50,7 +50,52 @@ export const fields = [
   },
 ];
 
+const baseOperators = {
+  equals: {
+    key: 'equals',
+    defaultValue: null,
+    getClause: (column, value) => `${column}='${value}'`,
+  },
+  'in list': {
+    key: 'in list',
+    defaultValue: 'first,second,third',
+    getClause: (column, list) =>
+      `${column} IN ('${list.split(',').join("','")}')`,
+  },
+};
+
 export const operators = {
-  string: ['equals', 'contains', 'starts with', 'in list'],
-  number: ['equals', 'between', 'greater than', 'less than', 'in list'],
+  string: [
+    baseOperators.equals,
+    {
+      key: 'contains',
+      defaultValue: null,
+      getClause: (column, value) => `${column} LIKE '%${value}%'`,
+    },
+    {
+      key: 'starts with',
+      defaultValue: null,
+      getClause: (column, value) => `${column} LIKE '${value}%'`,
+    },
+    baseOperators['in list'],
+  ],
+  number: [
+    baseOperators.equals,
+    {
+      key: 'between',
+      defaultValue: [0, 42],
+      getClause: (column, min, max) => `${column} BETWEEN ${min} and ${max}`,
+    },
+    {
+      key: 'greater than',
+      defaultValue: null,
+      getClause: (column, value) => `${column}>'${value}'`,
+    },
+    {
+      key: 'less than',
+      defaultValue: null,
+      getClause: (column, value) => `${column}<'${value}'`,
+    },
+    baseOperators['in list'],
+  ],
 };

@@ -4,7 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Select from '../select/select.component';
 import { fields, operators } from '../../app.config';
-import { getCondition, defaultCondition } from '../../shared/libs/utils';
+import {
+  defaultCondition,
+  getOperatorFromFieldAndKey,
+} from '../../shared/libs/utils';
 import styles from './form-condition.module.scss';
 
 const DefaultForm = ({
@@ -21,7 +24,7 @@ const DefaultForm = ({
       className={styles['default-form-item']}
       options={getSelectOptionsFromFields()}
       onChange={(selected) => onFieldChange(selected)}
-      defaultValue={currentCondition}
+      defaultValue={getSelectOptionsFromFields()[0]}
     />
     <Select
       className={styles['default-form-item']}
@@ -32,7 +35,6 @@ const DefaultForm = ({
     <input
       className={classNames(styles['default-form-item'], styles.input)}
       placeholder={currentCondition.defaultValue}
-      defaultValue={currentCondition.value}
       onKeyUp={(e) => onInputUpdate(e.target.value)}
     />
   </div>
@@ -65,13 +67,13 @@ const BetweenForm = ({
     <input
       className={classNames(styles['between-form-input'], styles.input)}
       onKeyUp={(e) => onMinUpdate(e.target.value)}
-      defaultValue={currentCondition.min}
+      placeholder={currentCondition.operator.defaultValue[0]}
     />
     <span className={styles.filler}>and</span>
     <input
       className={classNames(styles['between-form-input'], styles.input)}
       onKeyUp={(e) => onMaxUpdate(e.target.value)}
-      defaultValue={currentCondition.max}
+      placeholder={currentCondition.operator.defaultValue[1]}
     />
   </div>
 );
@@ -92,26 +94,32 @@ export default function FormCondition({
   };
   const onFieldChange = (selected) => {
     const field = fields[fieldIndexes[selected.key]];
-    const newCondition = getCondition(field);
+    const newCondition = {
+      ...condition,
+      ...field,
+    };
     onConditionUpdate(newCondition);
   };
 
   const onOperatorChanged = (selected) => {
-    // TODO: Check in here if type operator is between
     let newCondition = {
       ...condition,
-      operator: selected.key,
+      operator: getOperatorFromFieldAndKey(condition.type, selected.key),
     };
     if (selected.key === 'between') {
+      const { defaultValue } = newCondition.operator;
       newCondition = {
         ...newCondition,
-        min: '',
-        max: '',
+        defaultValue,
       };
     } else {
+      const defaultValue =
+        newCondition.operator.defaultValue === null
+          ? newCondition.defaultValue
+          : newCondition.operator.defaultValue;
       newCondition = {
         ...newCondition,
-        value: '',
+        defaultValue,
       };
     }
     onConditionUpdate(newCondition);
@@ -135,8 +143,8 @@ export default function FormCondition({
     });
   };
   const getCurrentConditionOperator = () => ({
-    label: condition.operator,
-    key: condition.operator,
+    label: condition.operator.key,
+    key: condition.operator.key,
   });
   const getSelectOptionsFromFields = () =>
     availableFields.map(({ label, key }) => ({
@@ -144,16 +152,17 @@ export default function FormCondition({
       key,
     }));
   const getSelectOptionsFromOperators = () =>
-    operators[condition.type].map((key) => ({
+    operators[condition.type].map(({ key }) => ({
       label: key,
       key,
     }));
+  const getIsBetween = () => condition.operator.key === 'between';
   return (
     <div className={classNames(styles.container, className)}>
       <button className={styles.remove} onClick={(e) => onRemoveClicked(e)}>
         <FontAwesomeIcon icon={faTimes} className={styles.icon} />
       </button>
-      {condition.operator === 'between' ? (
+      {getIsBetween() ? (
         <BetweenForm
           currentCondition={condition}
           getSelectOptionsFromFields={getSelectOptionsFromFields}

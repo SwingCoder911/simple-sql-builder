@@ -28,6 +28,10 @@
   margin: 1em 0;
 }
 
+.error {
+  color: #e03726;
+}
+
 .footer {
   border-top: 1px solid $button-gray;
 
@@ -55,7 +59,7 @@
     border-radius: $form-radius;
     padding: 0.5em;
     font-size: 1em;
-    color: $button-gray;
+    color: $darker-gray;
     display: block;
   }
 }
